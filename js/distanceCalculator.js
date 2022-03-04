@@ -141,11 +141,11 @@ function calculateAlphaShapeDistance(datasets, extent) {
         for (var i in distanceDict) {
             for (var j in distanceDict[i]) {
                 i = +i, j = +j;
-                alphaShape_distance[i][j] += d3.sum(distanceDict[i][j]) / Math.pow(cluster_nums[m][i], 2);
+                alphaShape_distance[i][j] += d3.sum(distanceDict[i][j]) / Math.pow(cluster_nums[m][i], 1);
             }
         }
         for (let i = 0; i < cluster_num; i++) {
-            non_separability_weights[i] += non_separability_weights_tmp[i] / Math.pow(cluster_nums[m][i], 2);
+            non_separability_weights[i] += non_separability_weights_tmp[i] / Math.pow(cluster_nums[m][i], 1);
         }
     }
 
