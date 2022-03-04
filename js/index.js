@@ -395,24 +395,24 @@ function appendPaletteResult(palette) {
                 if (t[0] === undefined) return "no name";
                 return c3.terms[t[0].index];
             });
-        // append lock and unlock sign
-        let img = span.append("img").attr("class", "icon_unlock").style("display", "none").attr("isLocked", "0")
-            .on("click", function () {
-                if (d3.select(this).attr("class") === "icon_lock")
-                    d3.select(this).attr("class", "icon_unlock").attr("isLocked", "0").style("display", "none")
-                else
-                    d3.select(this).attr("class", "icon_lock").attr("isLocked", "1").style("display", "block")
-            });
-        if (locked_pos.indexOf(i) != -1) {
-            img.attr("class", "icon_lock").style("display", "block").attr("isLocked", "1")
-        }
-        span.on("mouseover", function () {
-            d3.select(this).select("img").style("display", "block");
-        })
-            .on("mouseout", function () {
-                if (d3.select(this).select("img").attr("class") === "icon_unlock")
-                    d3.select(this).select("img").style("display", "none")
-            })
+        // // append lock and unlock sign
+        // let img = span.append("img").attr("class", "icon_unlock").style("display", "none").attr("isLocked", "0")
+        //     .on("click", function () {
+        //         if (d3.select(this).attr("class") === "icon_lock")
+        //             d3.select(this).attr("class", "icon_unlock").attr("isLocked", "0").style("display", "none")
+        //         else
+        //             d3.select(this).attr("class", "icon_lock").attr("isLocked", "1").style("display", "block")
+        //     });
+        // if (locked_pos.indexOf(i) != -1) {
+        //     img.attr("class", "icon_lock").style("display", "block").attr("isLocked", "1")
+        // }
+        // span.on("mouseover", function () {
+        //     d3.select(this).select("img").style("display", "block");
+        // })
+        //     .on("mouseout", function () {
+        //         if (d3.select(this).select("img").attr("class") === "icon_unlock")
+        //             d3.select(this).select("img").style("display", "none")
+        //     })
     }
     outputPalette(palette);
 
