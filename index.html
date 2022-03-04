@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C3-palette</title>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/lib/d3.v4.min.js"></script>
+    <script type="text/javascript" src="js/lib/munkres.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- toggle javascripts -->
+    <script src="css/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="css/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="css/jquery.nicescroll.js"></script>
+    <script src="css/jquery.scrollTo.min.js"></script>
+    <script src="css/scripts.js"></script>
+    <!-- bootstrap -->
+    <script src="css/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- container section start -->
+    <section id="container" class="">
+        <header class="header dark-bg">
+
+            <!--logo start-->
+            <p><a href="index.html" class="logo">C<sup
+                        style="vertical-align: top;line-height: 50px;top: 0;">3</sup>-Palette</a></p>
+            <!--logo end-->
+
+            <div style="float: left;margin-left: 120px;width: 200px;">
+                <ul class="nav top-menu">
+                    <!-- load example data start -->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="icon_folder-open_alt"></i>
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <div class="notify-arrow notify-arrow-black"></div>
+                            <li>
+                                <p class="black">Load Example Data</p>
+                            </li>
+                            <li>
+                                <a href="#" onclick="loadScatterplotExample()">
+                                    <div class="task-info">
+                                        <div class="desc">
+                                            <img src="img/scatter.png" style="width:14px;height:14px;"> &nbsp;&nbsp;
+                                            Scatterplot Example
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="loadLinechartExample()">
+                                    <div class="task-info">
+                                        <div class="desc">
+                                            <i class="icon_easel"></i> &nbsp;&nbsp; Line Chart Example
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="loadBarchartExample()">
+                                    <div class="task-info">
+                                        <div class="desc">
+                                            <i class="icon_datareport"></i> &nbsp;&nbsp; Bar Chart Example
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <!-- load example data end -->
+                    <!-- load data start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="icon_folder-alt"></i>
+                        </a>
+                        <ul class="dropdown-menu extended inbox">
+                            <div class="notify-arrow notify-arrow-black"></div>
+                            <li>
+                                <p class="black">Load Your Data</p>
+                            </li>
+                            <li>
+                                <a href="#" onclick="F_Open_dialog('SCATTERPLOT')">
+                                    <div class="task-info">
+                                        <div class="desc">
+                                            <img src="img/scatter.png" style="width:14px;height:14px;"> &nbsp;&nbsp;
+                                            Scatterplot Data
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="F_Open_dialog('LINECHART')">
+                                    <div class="task-info">
+                                        <div class="desc">
+                                            <i class="icon_easel"></i> &nbsp;&nbsp; Line Chart Data
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="F_Open_dialog('BARCHART')">
+                                    <div class="task-info">
+                                        <div class="desc">
+                                            <i class="icon_datareport"></i> &nbsp;&nbsp; Bar Chart Data
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <input type="file" id="fileLoad" style="display:none" multiple="multiple">
+                    </li>
+                    <!-- load data end -->
+                    <!-- <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <h2 style="margin-left: 50px;margin-top: 10px;float: left;"><img src="img/loading.gif" id="loading"
+                class="hide"></h2>
+          </a> -->
+                </ul>
+
+            </div>
+            <div style="float: left;margin-top: 0px;">
+                <h2 style="margin-left: 50px;margin-top: 10px;float: left;"><img src="img/loading.gif" id="loading"
+                        class="hide"></h2>
+            </div>
+            <div style="float: left;margin-top: 20px;font-size: 16px;" id="warn_div"><i
+                    class="arrow_left_alt"></i>&nbsp;&nbsp;<span>Please
+                    Load Data
+                    First.</span>&nbsp;&nbsp;<i class="icon_error-triangle_alt"></i></div>
+
+
+            <div class="top-nav notification-row">
+                <!-- notificatoin dropdown start-->
+                <ul class="nav pull-right top-menu">
+                    <!-- alert notification start-->
+                    <li id="alert_notificatoin_bar">
+                        <h2 style="margin-top: 0px;"><i class="icon_question_alt2" onclick="showHelp()"
+                                style="cursor:pointer"></i>
+                        </h2>
+                    </li>
+                    <!-- alert notification end-->
+                </ul>
+                <!-- notificatoin dropdown end-->
+            </div>
+        </header>
+        <!--header end-->
+
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar">
+                <div style="padding-right: 15px;
+        margin-top: 80px;
+        background: #53585d;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        /* line-height: 20px;
+        padding: 15px 0 15px 10px; */">
+                </div>
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu">
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="">
+                            <span>Generation Mode</span>
+                            <span class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul class="sub" style="display: block;">
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label style="font-size: 16px;font-weight: bold;margin-right: 10px;"><input
+                                            type="radio" name="generationMode" id="caRatioId"
+                                            value="colorAssignment">&nbsp;&nbsp;Color
+                                        Assignment for</label>
+                                    <select class="form-control paletteFnt" style="width: 120px;display: inline-block;">
+                                        <option>Tableau 10</option>
+                                        <option selected>Tableau 20</option>
+                                        <option>ColorBrewer 12-class Paired</option>
+                                        <option>ColorBrewer 12-class Set3</option>
+                                        <option>Input your own palette:</option>
+                                    </select>
+                                    <input type="text" id="inputPaletteText" size="200"
+                                        style="width: 200px;height:36px;float: left;margin-left: 20px;font-size: 6px;display: none;"
+                                        value="">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label style="font-size: 16px;font-weight: bold;"><input type="radio"
+                                            name="generationMode" id="pgRatioId" value="paletteGeneration"
+                                            checked>&nbsp;&nbsp;Palette
+                                        Generation</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu" hidden>
+                        <a href="javascript:;" class="">
+                            <i class="icon_document_alt"></i>
+                            <span>File Infomation</span>
+                            <span class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label><strong>File Name: &nbsp; </strong> </label>
+                                    <label id="file_label">default.csv</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label><strong>Class Number:&nbsp;</strong> </label>
+                                    <span id="class_num_info">None</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label><strong>Points Number:&nbsp;</strong> </label>
+                                    <span id="points_num_info">None</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="">
+                            <!-- <i class="icon_adjust-horiz"></i> -->
+                            <span>Control Panel</span>
+                            <span class="menu-arrow arrow_carrot-down"></span>
+                        </a>
+                        <ul class="sub" style="display: block;">
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label style="width: 180px;"><strong>Class Saliency:</strong> </label>
+                                    <input class="form-control" id="inputBox_cos" type="number" value="100" step="1"
+                                        min="0" max="100" style="width: 80px;display: inline-block;"
+                                        oninput="changeSlider(this.id, this.value)">
+                                    <label>%</label>
+                                    <span class="arrow_carrot-down" onclick="showSlider('slider_0_div',this);"
+                                        style="margin-left: 10px;font-size: large;background-color: #f6f6f6;"></span>
+                                </div>
+                                <div class="menu-sidebar-div" id="slider_0_div"
+                                    style="padding-left: 32px;display: none;">
+                                    <input id="slider_0" name="slider_0" type="range" min=0 max=100 value=100
+                                        style="margin-left: 160px;" oninput="changeSlider(this.name, this.value)" />
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label style="width: 180px;"><strong>Name Difference:</strong> </label>
+                                    <input class="form-control" id="inputBox_nd" type="number" value="100" step="1"
+                                        min="0" max="100" style="width: 80px;display: inline-block;"
+                                        oninput="changeSlider(this.id, this.value)">
+                                    <label>%</label>
+                                    <span class="arrow_carrot-down" onclick="showSlider('slider_1_div',this);"
+                                        style="margin-left: 10px;font-size: large;background-color: #f6f6f6;"></span>
+                                </div>
+                                <div class="menu-sidebar-div" id="slider_1_div"
+                                    style="padding-left: 32px;display: none;">
+                                    <input id="slider_1" name="slider_1" type="range" min=0 max=100 value=100
+                                        style="margin-left: 160px;" oninput="changeSlider(this.name, this.value)" />
+                                </div>
+                            </li>
+                            <li hidden>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label style="width: 180px;"><strong>Color Discrimination:</strong> </label>
+                                    <input class="form-control" id="inputBox_cd" type="number" value="0" step="1"
+                                        min="0" max="100" style="width: 80px;display: inline-block;"
+                                        oninput="changeSlider(this.id, this.value)">
+                                    <label>%</label>
+                                    <span class="arrow_carrot-down" onclick="showSlider('slider_2_div',this);"
+                                        style="margin-left: 10px;font-size: large;background-color: #f6f6f6;"></span>
+                                </div>
+                                <div class="menu-sidebar-div" id="slider_2_div"
+                                    style="padding-left: 32px;display: none;">
+                                    <input id="slider_2" name="slider_2" type="range" min=0 max=100 value=0
+                                        style="margin-left: 160px;" oninput="changeSlider(this.name, this.value)" />
+                                </div>
+                            </li>
+                            <li style="display: inline-block;">
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label style="width: 180px;"><strong>Lambda:</strong> </label>
+                                    <input class="form-control" id="inputBox_lambda" type="number" value="10" step="1"
+                                        min="0" max="100" style="width: 80px;display: inline-block;"
+                                        oninput="changeSlider(this.id, this.value)">
+                                    <label>%</label>
+                                    <span class="arrow_carrot-down" onclick="showSlider('slider_3_div',this);"
+                                        style="margin-left: 10px;font-size: large;background-color: #f6f6f6;"></span>
+                                </div>
+                                <div class="menu-sidebar-div" id="slider_3_div"
+                                    style="padding-left: 32px;display: none;">
+                                    <input id="slider_3" name="slider_3" type="range" min=0 max=100 value=10
+                                        style="margin-left: 160px;" oninput="changeSlider(this.name, this.value)" />
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="">
+                            <span>Importance Panel</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub" style="display: block;">
+                            <li>
+                                <div class="menu-sidebar-div" id="tfDiv">
+                                </div>
+                                <div class="menu-sidebar-div">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width:10%">
+                                            </col>
+                                            <col style="width:10%">
+                                            </col>
+                                            <col style="width:20%">
+                                            </col>
+                                            <col style="width:20%">
+                                            </col>
+                                            <col style="width:20%">
+                                            </col>
+                                            <col style="width:20%">
+                                            </col>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th><span class="icon_lock_alt" style="font-size: large;"></span></th>
+                                                <th></th>
+                                                <th>Attr.</th>
+                                                <th>Impo.</th>
+                                                <th>Color Name</th>
+                                                <th>Hex</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tfInfoLabel">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="">
+                            <span>Lightness Range</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;text-align:center;">
+                                    <svg id="lightnessFilterBar"></svg>
+                                    <div>
+                                        <input type="number" class="lightnessFilterInput" placeholder="#"
+                                            id="lightnessFilterRangeLow" style="width: 50px;margin-left: 10px;"
+                                            readonly> to
+                                        <input type="number" class="lightnessFilterInput" placeholder="#"
+                                            id="lightnessFilterRangeHigh" style="width: 50px;" readonly>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sub-menu" hidden>
+                        <a href="javascript:;" class="">
+                            <span>Hue Filter</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label><strong>Color Names: &nbsp; </strong> </label>
+                                    <div id="color-names-div">
+                                        <input type="checkbox" name="blue" value="blue">
+                                        <label for="blue"> Blue</label><br>
+                                        <input type="checkbox" name="brown" value="brown">
+                                        <label for="brown"> Brown</label><br>
+                                        <input type="checkbox" name="green" value="green">
+                                        <label for="green"> Green</label><br>
+                                        <input type="checkbox" name="orange" value="orange">
+                                        <label for="orange"> Orange</label><br>
+                                        <input type="checkbox" name="pink" value="pink">
+                                        <label for="pink"> Pink</label><br>
+                                        <input type="checkbox" name="purple" value="purple">
+                                        <label for="purple"> Purple</label><br>
+                                        <input type="checkbox" name="red" value="red">
+                                        <label for="red"> Red</label><br>
+                                        <input type="checkbox" name="yellow" value="yellow">
+                                        <label for="yellow"> Yellow</label><br>
+                                        <input type="checkbox" name="black" value="black">
+                                        <label for="black"> Black</label><br>
+                                        <input type="checkbox" name="grey" value="grey">
+                                        <label for="grey"> Grey</label><br>
+                                        <input type="checkbox" name="white" value="white">
+                                        <label for="white"> White</label><br>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu" hidden>
+                        <a href="javascript:;" class="">
+                            <span>Color Blindness</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                        <ul class="sub">
+                            <li>
+                                <div class="menu-sidebar-div" style="padding-left: 32px;">
+                                    <label><strong>Types: &nbsp; </strong> </label>
+                                    <div>
+                                        <label><input type="radio" name="colorblindType" value="Normal"
+                                                checked />Normal</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Protanopia" />Protanopia</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Protanomaly" />Protanomaly</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Deuteranopia" />Deuteranopia</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Deuteranomaly" />Deuteranomaly</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Tritanopia" />Tritanopia</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Tritanomaly" />Tritanomaly</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Achromatopsia" />Achromatopsia</label><br>
+                                        <label><input type="radio" name="colorblindType"
+                                                value="Achromatomaly" />Achromatomaly</label>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <div>
+                        <div class="panel-body-svg" style="display: inline-block;">
+                            <div style="margin-top: 10px;display: none;">
+                                <label>
+                                    <h4><strong>Click on the point to choose clusters to emphasize:</strong></h4>
+                                </label><br>
+                                <div id="choosedDiv"></div>
+                                <h4><strong>Click on the rect to delete.</strong></h4>
+                            </div>
+                            <br>
+                            <div id="outputDiv" style="margin-top: 10px;display: inline-block;">
+                                <label>
+                                    <h4><strong>Optimized Palette:</strong></h4>
+                                </label><br>
+                                <div class="paletteDiv"></div><br>
+                                <label style="float: left;" for="name">
+                                    <h4><strong>Text:&nbsp;&nbsp;</strong></h4>
+                                </label>
+                                <input type="text" id="paletteText" name="name" size="200"
+                                    style="width: 400px;height:36px;float: left;" readonly value=""
+                                    onclick="this.setSelectionRange(0, this.value.length);">
+                                <select class="form-control resultFnt" style="width: 100px;float: left;">
+                                    <option selected>Hex</option>
+                                    <option>RGB</option>
+                                    <option>Lab</option>
+                                    <option>LCH</option>
+                                    <option>HSL</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="col-lg-12 col-md-15">
+                        <div class="panel panel-default">
+                            <div class="panel-heading operationDiv">
+                                <button style="background-color:#6c757d; border-color:#6c757d;" id="generateResultID"
+                                    onclick="renderResult()">
+                                    <i class="icon_refresh"></i>
+                                    <h2><strong style="font-weight: bold;">Re-Colorizing</strong></h2>
+                                </button>
+                                <!-- <a href="#" class="btn-setting" style="margin-left: 10px;text-align: center;">
+                  <i><img class="icon_efficiency_choosed" id="effi_icon" title="High Efficiency"
+                      onclick="saMode(0)"></i>
+                  <i><img class="icon_quality" id="qual_icon" title="High Quality" onclick="saMode(1)"></i>
+                </a> -->
+                                <img src="img/loading.gif" id="running" class="hide">
+
+                                <!-- <label for="svgwidth"><strong>&nbsp;&nbsp;Width:</strong></label>
+                <input type="number" name="svgwidth" id="svgwidth" min="400" max="1000" style="width: 5em;" placeholder="400">
+                <label for="svgheight"><strong>&nbsp;&nbsp;Height:</strong></label>
+                <input type="number" name="svgheight" id="svgheight" min="400" max="1000" style="width: 5em;" placeholder="400"> -->
+
+                                <div class="panel-actions">
+                                    <!-- <a href="#" class="btn-setting" onclick="changeBgcolor()">
+                    <i>
+                      <img class="icon_black_bg" id="bg_icon" title="Change Background Color">
+                    </i>
+                  </a> -->
+                                    <a href="#" class="btn-setting" onclick="downloadSvg()">
+                                        <i>
+                                            <img class="icon_download" id="download_icon" title="Download SVG">
+                                        </i>
+                                    </a>
+                                    <a href="#" class="btn-setting" onclick="savePNG()">
+                                        <i>
+                                            <img class="icon_download" id="download_icon" title="Download PNG">
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="panel-body-svg" style="text-align: center;">
+
+                                <div id="renderDiv"
+                                    style="height:620px;overflow-x:scroll;overflow-y:hidden;white-space: nowrap;">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <!-- List starts -->
+                            <ul style="padding-left: 0px;">
+                                <li
+                                    style="background: #53585d;color: white;font-size: 18px;font-weight: bold;line-height: 20px;padding: 15px 0 15px 10px;margin-top: -14px;">
+                                    <i class="fa fa-history"></i>
+                                    <span>History Panel</span>
+                                </li>
+                            </ul>
+                            <ul class="historyList"
+                                style="padding-left: 0px;overflow: auto;height: 100vh;background-color: #f6f6f6;">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+            <div class="text-right">
+                <div class="credits">
+
+                </div>
+            </div>
+            <div class="instructions-container hide">
+                <div class="col-sm-12 col-md-6">
+                    <!-- <video src="./tutorial.mp4" controls="controls">
+            您的浏览器不支持 video 标签。
+          </video> -->
+                </div>
+                <div class="col-sm-12 col-md-6 instructions_div">
+                </div>
+                <div></div>
+            </div>
+        </section>
+        <!--main content end-->
+    </section>
+    <!-- container section start -->
+</body>
+<script>
+    $(".instructions_div").load("./instructions.html");
+</script>
+
+<script type="text/javascript" src="js/lib/d3.color.min.js"></script>
+<script type="text/javascript" src="js/lib/c3.min.js"></script>
+<script type="text/javascript" src="js/lib/hcirn_colorblind_simulation.js"></script>
+
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/lightnessFilter.js"></script>
+<script type="text/javascript" src="js/dataLoader.js"></script>
+<script type="text/javascript" src="js/distanceCalculator.js"></script>
+<script type="text/javascript" src="js/optimizeFunc.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+</html>
