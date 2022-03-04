@@ -6,18 +6,19 @@ function initGlobalVariables() {
 function loadScatterplotExample() {
     source_datasets = [];
     source_datasets_names = [];
-    d3.text("./data/scatterplot-0.csv", function (error, text) {
+    d3.text("./data/teaser-top.csv", function (error, text) {
         if (error) throw error;
         DATATYPE = "SCATTERPLOT";
-        source_datasets_names.push("scatterplot-0");
+        source_datasets_names.push("teaser-top");
         let labelSet = new Set();
-        if (!loadData(text, labelSet, "scatterplot-0")) {
+        if (!loadData(text, labelSet, "teaser-top")) {
             console.log("Loading file problem.");
             return
         }
 
         labelToClass = getLabelToClassMapping(labelSet);
         initGlobalVariables();
+        change_distance[5] = 1;
         processScatterData(source_datasets);
         d3.select(".operationDiv").style('pointer-events', "auto");
         document.querySelector('#loading').classList.add('hide');

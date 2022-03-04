@@ -641,10 +641,10 @@ function drawTransferFunction(palette) {
             color_name +
             "</td><td>" +
             // getColorSaliency(palette[id]).toFixed(2) +
-            getLuminance(palette[id]).toFixed(2) + " - " +
-            getSaturation(palette[id]).toFixed(2) + " - " +
-            d3_ciede2000(d3.lab(palette[id]), d3.lab(bgcolor)).toFixed(2) +
-            // colorConversionFns['Hex'](palette[id]) +
+            // getLuminance(palette[id]).toFixed(2) + " - " +
+            // getSaturation(palette[id]).toFixed(2) + " - " +
+            // d3_ciede2000(d3.lab(palette[id]), d3.lab(bgcolor)).toFixed(2) +
+            colorConversionFns['Hex'](palette[id]) +
             "</td></tr>");
     }
     document.getElementById("tfInfoLabel").innerHTML = dataForm;

@@ -21,7 +21,7 @@ score_importance_weight[3] = document.getElementById("inputBox_lambda").value / 
 let generation_mode = 0;
 let source_datasets, source_datasets_names, labelToClass, assignment_palette, scaled_datasets;
 let change_distance, delta_change_distance, cosaliency_distance, alphaShape_distance, cluster_nums, non_separability_weights;
-let kappa = 0.001,
+let kappa = 0.1,
     cosaliency_lambda = 0.1;
 let xScale, xMap, xAxis, yScale, yMap, yAxis;
 let hue_constraints, initial_palette, highlighted_classes;
