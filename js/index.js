@@ -75,7 +75,7 @@ $("input[name='generationMode']").change(function () {
         changeSlider("slider_2", document.getElementById("slider_2").value)
     } else {
         generation_mode = 1;
-        document.getElementById("slider_1").value = 0;
+        document.getElementById("slider_1").value = 100;
         changeSlider("slider_1", document.getElementById("slider_1").value)
         document.getElementById("slider_2").value = 0;
         changeSlider("slider_2", document.getElementById("slider_2").value)
