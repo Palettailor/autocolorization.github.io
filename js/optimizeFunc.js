@@ -40,6 +40,14 @@ function doColorization() {
     }
     highlighted_classes.sort((a, b) => b[1] - a[1])
     console.log(highlighted_classes);
+    if (highlighted_classes.length > 1) {
+        let step_length = (lightnessRange[1] - lightnessRange[0] - 5) / (highlighted_classes.length - 1)
+        if (step_length <= 10) {
+            alert("The luminance range is not enough, please enlarge the range!")
+            return;
+        }
+    }
+
 
     if (generation_mode && color_names_checked.length === 0) {
         console.log("assignment palette");
