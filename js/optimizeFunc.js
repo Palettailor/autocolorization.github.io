@@ -311,8 +311,10 @@ function randomDisturbColors(palette, colors_scope) {
             hcl = rgb2hcl(palette[highlighted_classes[0][0]])
         }
 
+        let step_length = (colors_scope.lumi_scope[1] - colors_scope.lumi_scope[0] - 5) / (highlighted_classes.length - 1)
+        console.log("step_length is ", step_length);
         for (let i = 0; i < highlighted_classes.length; i++) {
-            palette[highlighted_classes[i][0]] = hcl2rgb(d3.hcl(hcl.h, hcl.c - 15 * i, hcl.l + 15 * i))
+            palette[highlighted_classes[i][0]] = hcl2rgb(d3.hcl(hcl.h, hcl.c - 15 * i, hcl.l + step_length * i))
             // palette[highlighted_classes[i][0]] = hcl2rgb(d3.hcl(normScope(hcl.h, colors_scope.hue_scope), normScope(hcl.c - 15 * i, [0, 100]), normScope(hcl.l + 15 * i, colors_scope.lumi_scope)));
         }
     }
