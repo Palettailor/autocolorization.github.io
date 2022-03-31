@@ -193,8 +193,8 @@
 </table>
 
 <p style="font-size: 18px;">
-  Download example data here: <a onclick="saveTable('scatterplot')" style="cursor:pointer">Scatterplot Example</a>, <a
-    onclick="saveTable('linechart')" style="cursor:pointer">Line Chart Example</a>, <a onclick="saveTable('barchart')"
+  Download example data here: <a onclick="saveTable('teaser-top')" style="cursor:pointer">Scatterplot Example</a>, <a
+    onclick="saveTable('linechart-0')" style="cursor:pointer">Line Chart Example</a>, <a onclick="saveTable('barchart-0')"
     style="cursor:pointer">Bar Chart Example</a>
 </p>
 
@@ -219,13 +219,13 @@
 
 <script>
   function saveTable(name) {
-    d3.text("./data/" + name + "-0.csv", function (error, text) { 
+    d3.text("./data/" + name + ".csv", function (error, text) { 
       if (error) throw error;
-      downloadFile(name + "-0.csv", text);
-      d3.text("./data/" + name + "-1.csv", function (error, text) {
-        if (error) throw error;
-        downloadFile(name + "-1.csv", text);
-      });
+      downloadFile(name + ".csv", text);
+      // d3.text("./data/" + name + "-1.csv", function (error, text) {
+      //   if (error) throw error;
+      //   downloadFile(name + "-1.csv", text);
+      // });
     });
   }
   function downloadFile(fileName, content) {
